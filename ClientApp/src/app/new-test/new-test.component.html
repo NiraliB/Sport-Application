@@ -1,0 +1,128 @@
+
+<div class="panel">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <span style="font-size:large;">Welcome <b>{{loggedUserName}}</b> to the Sports Application</span><br />
+        <span style="font-size:large;">You play the Role as a <b>{{loggedUserType}}</b> </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="box" style="margin-top:10px;">
+  <div class="container">
+    <div class="col-md-3" *ngIf="dispCreateBtn">
+      <button type="button" class="btn btn-primary" (click)="show()">
+        Create New Test
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Create New Test</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Test Type </label>
+              <select class="form-control" name="ddlTestTypeId" [(ngModel)]="testModel.TestTypeId">
+                <option value="">Select Type</option>
+                <option *ngFor="let testT of listOfType" [value]="testT.testTypeId">
+                  {{testT.typeName}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="input-group" style="padding-top:30px;">
+                <input class="form-control" type="text" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model"
+                       ngbDatepicker #date="ngbDatepicker" (ngModelChange)="selectDate(model)">
+
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="date.toggle()" type="button"></button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>No Of Candidate </label>
+              <input class="form-control" type="text" name="NoOfCandidate" [(ngModel)]="testModel.NoOfCandidate" />
+            </div>
+          </div>
+
+        </div>-->
+
+        <div class="row">
+          <div class="col-md-2">
+            <input type="button" (click)="SaveTestEntryData(testModel)" name="btnSave" id="btnSave" value="Save" class="btn btn-primary">
+          </div>
+
+          <div class="col-md-3">
+            <input type="button" (click)="CancelTestEntry()" name="btnCancel" id="btnCancel" value="Cancel" class="btn btn-primary">
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="box" style="margin-top:10px;">
+  <div class="box-body">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="col-md-12 col-lg-12 col-sm-12 table-responsive" style="overflow-x:auto">
+          <table  class="table table-bordered table-striped table-hover tblWidthResponsive">
+            <thead>
+              <tr>
+                <th>Test Date</th>
+                <th>No Of Candidate</th>
+                <th>Test Type</th>
+                <th *ngIf="dispCreateBtn">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let getEntry of listOfAllEntry">
+                <td *ngIf="dispCreateBtn"><a [routerLink]="['/CooperTestDetail',getEntry.testId,getEntry.testDate,'Details']">{{getEntry.testDate | date: 'ddMMyyyy'}} </a> </td>
+                <td *ngIf="!dispCreateBtn"><span>{{getEntry.testDate | date: 'ddMMyyyy'}} </span> </td>
+                <td>{{getEntry.noOfCandidate}}</td>
+                <td>{{getEntry.typeName}}</td>
+                <td *ngIf="dispCreateBtn">
+                  <button type="button" class="btn btn-outline-secondary" (click)="editTestEntry(getEntry.testId)">Edit</button> |
+                  <button type="button" class="btn btn-outline-secondary" (click)="deleteTestEntryRecord(getEntry.testId)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+  </div>
+</div>

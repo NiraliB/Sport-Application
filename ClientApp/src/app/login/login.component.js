@@ -1,0 +1,44 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var login_service_1 = require("./login.service");
+var UserLogin_1 = require("./UserLogin");
+var LoginComponent = /** @class */ (function () {
+    function LoginComponent(router, LoginService, appComp) {
+        this.router = router;
+        this.LoginService = LoginService;
+        this.appComp = appComp;
+        this.loginModel = new UserLogin_1.UserLogin();
+    }
+    LoginComponent.prototype.Login = function (getLoginData) {
+        var _this = this;
+        this.LoginService.GetLogin(getLoginData).subscribe(function (getUser) {
+            _this.appComp.hideBtn = true;
+            localStorage.setItem('currentUserId', getUser["userId"]);
+            localStorage.setItem('currentUserName', getUser["userName"]);
+            localStorage.setItem('currentUserType', getUser["userType"]);
+            _this.router.navigate(['/NewTest']);
+        });
+    };
+    LoginComponent.prototype.ngOnInit = function () {
+        sessionStorage.removeItem('UserName');
+        sessionStorage.clear();
+    };
+    LoginComponent = __decorate([
+        core_1.Component({
+            selector: 'app-login',
+            templateUrl: './login.component.html',
+            styleUrls: ['./login.component.css'],
+            providers: [login_service_1.LoginService]
+        })
+    ], LoginComponent);
+    return LoginComponent;
+}());
+exports.LoginComponent = LoginComponent;
+//# sourceMappingURL=login.component.js.map

@@ -1,0 +1,11 @@
+.tblWidthResponsive {
+  width: 100%;
+}
+
+.no-data-available {
+  text-align: center;
+}
+
+.dataTables_empty {
+  display: none;
+}

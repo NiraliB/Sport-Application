@@ -1,0 +1,103 @@
+
+<div class="row">
+  <div class="col-md-12 text-center">
+    <h3> COOPER TEST DATE {{dispTestDate | date: 'ddMMyyyy'}} </h3>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-3">
+    <a class="navbar-brand" routerLink="/NewTest">Back to Test List</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <button type="button" class="btn btn-primary" (click)="show()">
+      Add New Athlete
+    </button>
+  </div>
+</div>
+
+<div class="modal" id="myModal" [style.display]="showAthleteModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Athlete To Test</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Choose Athlete Name </label>
+              <select class="form-control" name="ddlAthleteName" [(ngModel)]="athleteMapModel.UserId">
+                <option value="">Select Name</option>
+                <option *ngFor="let athName of athleteDDList" [value]="athName.userId">
+                  {{athName.userName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Distance (Meter) </label>
+              <input class="form-control" type="text" id="txtDistance" name="txtDistance" [(ngModel)]="athleteMapModel.Distance" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <input type="button" name="btnSave" (click)="SaveAthleteDetails(athleteMapModel)" id="btnSaveAthlete" value="Save Athlete" class="btn btn-primary">
+          </div>
+          <div class="col-md-6">
+            <input type="button" name="btnCancel" (click)="CancelAthleteEntry()" id="btnCancelAthlete" value="Cancel" class="btn btn-primary">
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin-top:10px;">
+  <div class="col-md-12 col-lg-12 col-sm-12 table-responsive" style="overflow-x:auto">
+    <table id="tblCooperTestDetails" class="table text-center table-bordered table-striped table-hover tblWidthResponsive">
+      <thead>
+        <tr>
+          <th>Ranking</th>
+          <th>Distance</th>
+          <th>Fitness Rating</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dispAthlete of cooperMapList">
+          <td>{{dispAthlete.userName}}</td>
+          <td>{{dispAthlete.distance}}</td>
+          <td>{{dispAthlete.fitness}}</td>
+          <td>
+            <button type="button" class="btn btn-outline-secondary" (click)="editAthleteDetails(dispAthlete.mapId)">Edit</button> |
+            <button type="button" class="btn btn-outline-secondary" (click)="deleteAthleteFromTest(dispAthlete.mapId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+
+
